@@ -12,7 +12,7 @@ function App() {
       <Canvas
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.Uncharted2ToneMapping;
-          gl.setClearColor(new THREE.Color("#ff7e5f"));
+          gl.setClearColor(new THREE.Color("#232526"));
         }}
       >
         >
@@ -20,9 +20,9 @@ function App() {
         <pointLight intensity={3.12} position={[0, 0, 0]} />
         <Box positionProp={[-1, 10, -33]} color="#86fde8" interval={750} />
         <Box positionProp={[-4, 5, -2]} color="#B24592" interval={1500} />
-        <Box positionProp={[1, 1, -13]} color="#20BDFF" interval={300} />
-        <Box positionProp={[2, 4, -13]} color="#F15F79" interval={500} />
-        <Box positionProp={[4, 6, -13]} color="#ffe259" interval={1000} />
+        <Box positionProp={[1, 10, -15]} color="#20BDFF" interval={300} />
+        <Box positionProp={[2, 4, -5]} color="#F15F79" interval={500} />
+        <Box positionProp={[4, 15, -3]} color="#ffe259" interval={1000} />
         <Box positionProp={[4, 8, -13]} color="#ee9ca7" interval={500} />
         <sphereBufferGeometry args={[5, 10, 10]} attach="geometry" />
         <meshStandardMaterial

@@ -13,11 +13,18 @@ const Box = (props) => {
   const [randomNum, setCurrentRandomNum] = useState(0.5);
 
   const things = useSpring({
-    scale: active ? [1.4, randomNum, 10] : [1, 2, 2],
+    config: { duration: 1500, mass: 1, tension: 180, friction: 12 },
+    scale: active ? [1.4, randomNum * 10, 10] : [1, 2, 2],
     position: active
-      ? [1.4, 1, -10]
-      : [props.positionProp[0], randomNum, randomNum * props.positionProp[2]],
-    rotation: active ? [2, 2, 2] : [2, 1, 1],
+      ? [props.positionProp[0], props.positionProp[1], -10]
+      : [
+          props.positionProp[0] * randomNum * 3,
+          props.positionProp[1] * randomNum * 0.5,
+          props.positionProp[2],
+        ],
+    rotation: active
+      ? [props.positionProp[0], 2 * props.positionProp[1], 2]
+      : [2, props.positionProp[1], 1],
   });
 
   useEffect(() => {
@@ -31,7 +38,7 @@ const Box = (props) => {
     let random = Math.random();
   };
 
-  useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.x += 0.1));
+  //   useFrame(() => (mesh.current.rotation.y = mesh.current.rotation.y += 0.1));
 
   console.log(mesh);
   return (
