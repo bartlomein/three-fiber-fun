@@ -8,24 +8,35 @@ const Box = (props) => {
   const mesh = useRef();
 
   // Set up state for the hovered and active state
-  const [hovered, setHover] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState(false);
   const [randomNum, setCurrentRandomNum] = useState(0.5);
 
   const things = useSpring({
     config: { duration: 1500, mass: 1, tension: 180, friction: 12 },
-    scale: active ? [1.4, randomNum * 10, 10] : [1, 2, 2],
+    scale: active ? [5, 5, 5] : [2, 2, 2],
+    color: hovered ? props.color : "white",
     position: active
-      ? [props.positionProp[0], props.positionProp[1], -10]
+      ? [0, 0, -10]
       : [
-          props.positionProp[0] * randomNum * 3,
-          props.positionProp[1] * randomNum * 0.5,
+          props.positionProp[0] * randomNum * 1,
+          props.positionProp[1],
           props.positionProp[2],
         ],
     rotation: active
       ? [props.positionProp[0], 2 * props.positionProp[1], 2]
-      : [2, props.positionProp[1], 1],
+      : [randomNum, randomNum, 1],
   });
+
+  const clicked = (bool) => {
+    props.setClicked(bool);
+    setActive(bool);
+  };
+
+  const settingBoxHover = (bool) => {
+    setHovered(bool);
+    props.setBoxhovered(bool);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -40,11 +51,14 @@ const Box = (props) => {
 
   //   useFrame(() => (mesh.current.rotation.y = mesh.current.rotation.y += 0.1));
 
-  console.log(mesh);
   return (
     <a.mesh
+      castShadow
+      receiveShadow
       ref={mesh}
-      onClick={(e) => setActive(!active)}
+      onPointerOver={() => settingBoxHover(true)}
+      onPointerOut={() => settingBoxHover(false)}
+      onClick={(e) => clicked(!active)}
       scale={things.scale}
       position={things.position}
       rotation={things.rotation}
