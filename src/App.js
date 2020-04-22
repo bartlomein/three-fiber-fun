@@ -17,7 +17,7 @@ function App() {
 
   const things = useSpring({
     config: { duration: 500, mass: 1, tension: 5000, friction: 1 },
-    delay: clicked ? 1500 : 0,
+    delay: clicked ? 1000 : 0,
     opacity: clicked ? 1 : 0,
   });
 
@@ -63,35 +63,35 @@ function App() {
           setBoxhovered={setBoxhovered}
         />
         <Box
-          positionProp={[-4, 15, -20]}
+          positionProp={[-10, 10, -14]}
           color="#B24592"
           interval={1500}
           setClicked={setClicked}
           setBoxhovered={setBoxhovered}
         />
         <Box
-          positionProp={[10, -10, -40]}
+          positionProp={[-15, -10, -30]}
           color="#20BDFF"
           interval={300}
           setClicked={setClicked}
           setBoxhovered={setBoxhovered}
         />
         <Box
-          positionProp={[2, 4, -50]}
+          positionProp={[10, 4, -25]}
           color="#F15F79"
           interval={500}
           setClicked={setClicked}
           setBoxhovered={setBoxhovered}
         />
         <Box
-          positionProp={[43, 15, -10]}
+          positionProp={[15, 15, -18]}
           color="#ffe259"
           interval={1000}
           setClicked={setClicked}
           setBoxhovered={setBoxhovered}
         />
         <Box
-          positionProp={[4, 12, -76]}
+          positionProp={[4, 5, -15]}
           color="#ee9ca7"
           interval={500}
           setClicked={setClicked}
