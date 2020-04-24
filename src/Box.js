@@ -1,7 +1,9 @@
 import ReactDOM from "react-dom";
 import React, { useRef, useState, useEffect } from "react";
-import { Canvas, useFrame } from "react-three-fiber";
+import { Canvas, useFrame, useLoader } from "react-three-fiber";
 import { useSpring, a } from "react-spring/three";
+import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const Box = (props) => {
   // This reference will give us direct access to the mesh
@@ -13,7 +15,7 @@ const Box = (props) => {
   const [randomNum, setCurrentRandomNum] = useState(0.5);
 
   const things = useSpring({
-    config: { duration: 1500, mass: 1, tension: 180, friction: 12 },
+    config: { duration: 1500, mass: 15, tension: 1080, friction: 12 },
     scale: active ? [5, 5, 5] : [2, 2, 2],
     color: hovered ? props.color : "white",
     position: active
@@ -24,7 +26,7 @@ const Box = (props) => {
           props.positionProp[2],
         ],
     rotation: active
-      ? [props.positionProp[0], 2 * props.positionProp[1], 2]
+      ? [props.positionProp[0] * randomNum, 2 * props.positionProp[1], 2]
       : [randomNum, randomNum, 1],
   });
 
@@ -49,7 +51,15 @@ const Box = (props) => {
     let random = Math.random();
   };
 
-  //   useFrame(() => (mesh.current.rotation.y = mesh.current.rotation.y += 0.1));
+  const determineRotation = () => {
+    if (active) {
+      return (mesh.current.rotation.y = mesh.current.rotation.y += 0.01);
+    } else {
+      return (mesh.current.rotation.y = mesh.current.rotation.y += 1.5);
+    }
+  };
+
+  useFrame(() => determineRotation());
 
   return (
     <a.mesh
@@ -63,9 +73,53 @@ const Box = (props) => {
       position={things.position}
       rotation={things.rotation}
     >
-      <boxGeometry attach="geometry" args={[3, 1, -2]} />
+      <dodecahedronBufferGeometry attach="geometry" />
+      <meshPhongMaterial attach="material" color={props.color} />
+      <Birds
+        position={things.position}
+        rotation={things.rotation}
+        color={props.color}
+      />
+    </a.mesh>
+  );
+};
+
+const Explosion = (props) => {
+  console.log("explostopnm");
+  console.log(props);
+  const group = useRef();
+  // const [mixer] = useState(() => new THREE.AnimationMixer());
+
+  return (
+    <a.mesh
+      castShadow
+      receiveShadow
+      ref={group}
+      position={props.position}
+      rotation={props.rotation}
+    >
+      <dodecahedronBufferGeometry attach="geometry" />
       <meshPhongMaterial attach="material" color={props.color} />
     </a.mesh>
   );
 };
+
+function Birds(props) {
+  return new Array(3).fill().map((_, i) => {
+    const x = (15 + Math.random() * 30) * (Math.round(Math.random()) ? -1 : 1);
+    const y = -10 + Math.random() * 20;
+    const z = -5 + Math.random() * 10;
+    const bird = ["Stork", "Parrot", "Flamingo"][Math.round(Math.random() * 2)];
+    let speed = bird === "Stork" ? 0.5 : bird === "Flamingo" ? 2 : 5;
+    return (
+      <Explosion
+        key={i}
+        position={[y, 1, 1]}
+        rotation={props.rotation}
+        speed={speed}
+      />
+    );
+  });
+}
+
 export default Box;

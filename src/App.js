@@ -42,19 +42,19 @@ function App() {
       <Canvas
         onCreated={({ gl }) => {
           gl.toneMapping = THREE.Uncharted2ToneMapping;
-          gl.setClearColor(new THREE.Color("#232526"));
+          gl.setClearColor(new THREE.Color("#23074d"));
         }}
       >
         >
         <spotLight
-          intensity={0.3}
-          position={[30, 30, -50]}
+          intensity={0.003}
+          position={[0, 0, -20]}
           angle={0.2}
           penumbra={1}
           castShadow
         />
-        <ambientLight intensity={0.9} />
-        <pointLight intensity={3.12} position={[0, 0, 0]} />
+        <ambientLight intensity={0.5} />
+        <pointLight intensity={0.5} position={[0, 0, 0]} />
         <Box
           positionProp={[-1, 10, -13]}
           color="#86fde8"
