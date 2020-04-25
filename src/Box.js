@@ -80,12 +80,39 @@ const Box = (props) => {
         rotation={things.rotation}
         color={props.color}
       />
+      <Birds
+        position={things.position}
+        rotation={things.rotation}
+        color={props.color}
+      />
+      <Birds
+        position={things.position}
+        rotation={things.rotation}
+        color={props.color}
+      />
+      <Birds
+        position={things.position}
+        rotation={things.rotation}
+        color={props.color}
+      />
     </a.mesh>
   );
 };
 
 const Explosion = (props) => {
-  console.log("explostopnm");
+  const random = Math.random();
+
+  const things = useSpring({
+    config: { duration: 1500, mass: 15, tension: 10, friction: 12 },
+
+    position: [
+      props.position[0] * random * 2,
+      props.position[1],
+      props.position[2],
+    ],
+    rotation: [props.position[0] * random, 2 * props.position[1], 2],
+  });
+
   console.log(props);
   const group = useRef();
   // const [mixer] = useState(() => new THREE.AnimationMixer());
@@ -95,8 +122,8 @@ const Explosion = (props) => {
       castShadow
       receiveShadow
       ref={group}
-      position={props.position}
-      rotation={props.rotation}
+      position={things.position}
+      rotation={things.rotation}
     >
       <dodecahedronBufferGeometry attach="geometry" />
       <meshPhongMaterial attach="material" color={props.color} />
@@ -105,7 +132,7 @@ const Explosion = (props) => {
 };
 
 function Birds(props) {
-  return new Array(3).fill().map((_, i) => {
+  return new Array(2).fill().map((_, i) => {
     const x = (15 + Math.random() * 30) * (Math.round(Math.random()) ? -1 : 1);
     const y = -10 + Math.random() * 20;
     const z = -5 + Math.random() * 10;
